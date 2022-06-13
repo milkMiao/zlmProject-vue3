@@ -1,4 +1,4 @@
-import { createRenderer } from "vue";
+import { createRenderer } from "vue"; //创建自己的渲染器
 import { Container, Sprite, Texture } from "pixi.js";
 
 const renderer = createRenderer({
