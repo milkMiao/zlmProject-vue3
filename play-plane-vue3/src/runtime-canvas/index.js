@@ -1,6 +1,7 @@
 import { createRenderer } from "vue"; //创建自己的渲染器
 import { Container, Sprite, Texture } from "pixi.js";
 
+
 const renderer = createRenderer({
   createElement(type) {
     let element;
@@ -23,7 +24,7 @@ const renderer = createRenderer({
   },
 
   patchProp(el, key, prevValue, nextValue) {
-//     console.log(key);
+    // console.log(key, prevValue);
     switch (key) {
       case "texture":
         el.texture = Texture.from(nextValue);
@@ -48,6 +49,7 @@ const renderer = createRenderer({
   },
   createComment() {},
   nextSibling() {},
+  createText(){},
 });
 
 export function createApp(rootComponent) {
