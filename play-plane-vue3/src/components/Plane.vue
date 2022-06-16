@@ -7,6 +7,7 @@
 <script>
 import plane from "../assets/plane.png";
 import { reactive, onMounted, onUnmounted } from "vue";
+import { planeMove } from './planwMove'
 export default {
   setup() {
     return {
@@ -47,33 +48,34 @@ export function usePlane({ onAttack }) {
 
   // eslint-disable-next-line no-unused-vars
   //我方飞机-上下左右移动操作
-  function move() {
-    const speed = 10;
-    function handleMove(e) {
-      switch (e.code) {
-        case "ArrowUp":
-          planeInfo.y -= speed;
-          break;
-        case "ArrowDown":
-          planeInfo.y += speed;
-          break;
-        case "ArrowLeft":
-          planeInfo.x -= speed;
-          break;
-        case "ArrowRight":
-          planeInfo.x += speed;
-          break;
-      }
-    }
-    onMounted(() => {
-      window.addEventListener("keyup", handleMove);
-    });
-    onUnmounted(() => {
-      window.removeEventListener("keyup", handleMove);
-    });
-  }
+  // function move() {
+  //   const speed = 10;
+  //   function handleMove(e) {
+  //     switch (e.code) {
+  //       case "ArrowUp":
+  //         planeInfo.y -= speed;
+  //         break;
+  //       case "ArrowDown":
+  //         planeInfo.y += speed;
+  //         break;
+  //       case "ArrowLeft":
+  //         planeInfo.x -= speed;
+  //         break;
+  //       case "ArrowRight":
+  //         planeInfo.x += speed;
+  //         break;
+  //     }
+  //   }
+  //   onMounted(() => {
+  //     window.addEventListener("keyup", handleMove);
+  //   });
+  //   onUnmounted(() => {
+  //     window.removeEventListener("keyup", handleMove);
+  //   });
+  // }
 
-  move()
+  // move()
+  planeMove(planeInfo) //重构优化代码，替代move操作
   attack()
 
   return {
