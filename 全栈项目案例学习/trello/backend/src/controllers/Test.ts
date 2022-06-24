@@ -2,15 +2,14 @@
 import { Controller, Get, Params, Query } from 'koa-ts-controllers';
 import {IsNumberString} from 'class-validator';
 
-@Controller('/test')
-
 //定义数据类型规则
-class GetUsersQuery {
-  @IsNumberString()
-  page: number;
-}
+// class GetUsersQuery {
+//   @IsNumberString({ message:'page必须是数字' })
+//   page: number;
+// }
 
 
+@Controller('/test')
 class TestController {
     //当然仅仅只是这么一个类是没有什么作用的，
     //我们还需要把这个类变成控制类，并绑定其中的类方法到指定的路由中，这就需要用到 ` 装饰器`。
@@ -37,20 +36,19 @@ class TestController {
 				console.log(params);
 		}
 
-    @Get('/users')
-    async getUsers(
-        @Query() q: GetUsersQuery //数字类型规则
-    ) {
-        // 业务逻辑出现了一些错误，比如用户不存在，用户名已经被注册了
-        // 不存在该用户
-        // if (false) {
-        //     throw Boom.notFound('用户不存在', '这是错误的详细描述');
-        // }
-        // if (true) { // 用户名已经被注册了
-        //     throw Boom.notFound('注册失败', '用户已经被注册了');
-        // }
-        return '传过来的query：' + JSON.stringify(q);
-    }
-
+    // @Get('/users')
+    // async getUsers(
+    //     @Query() q: GetUsersQuery //数字类型规则
+    // ) {
+    //     // 业务逻辑出现了一些错误，比如用户不存在，用户名已经被注册了
+    //     // 不存在该用户
+    //     // if (false) {
+    //     //     throw Boom.notFound('用户不存在', '这是错误的详细描述');
+    //     // }
+    //     // if (true) { // 用户名已经被注册了
+    //     //     throw Boom.notFound('注册失败', '用户已经被注册了');
+    //     // }
+    //     return '传过来的query：' + JSON.stringify(q);
+    // }
 
 }

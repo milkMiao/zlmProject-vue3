@@ -1,0 +1,23 @@
+{
+    "development": {
+        "host": "127.0.0.1",// 数据库服务器主机
+        "dialect": "mysql",// 数据库类型
+        "username": "root", // 数据库服务器连接用户名
+        "password": "123", // 数据库服务器连接密码
+        "database": "trelllo_app_development" // 数据库名称
+    },
+    "test": {
+        "host": "127.0.0.1",
+        "dialect": "mysql",
+        "username": "root",
+        "password": null,
+        "database": "trelllo_app_test"
+    },
+    "production": {
+        "host": "127.0.0.1",
+        "dialect": "mysql",
+        "username": "root",
+        "password": null,
+        "database": "trelllo_app_production"
+    }
+}
