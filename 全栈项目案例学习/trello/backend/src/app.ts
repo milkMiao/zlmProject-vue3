@@ -1,13 +1,26 @@
-import configs from './config/index'
-import Koa, {Context, Next} from 'koa' //红色杠？因为koa是js写的，需要安装ts解析声明 -- npm i -D @types/koa
+import configs from './config/index';
+import Koa, {Context, Next} from 'koa'; //红色杠？因为koa是js写的，需要安装ts解析声明 -- npm i -D @types/koa
 import KoaRouter from 'koa-router' //注册路由
 import { bootstrapControllers } from 'koa-ts-controllers' //选择了一个基于 `TypeScript` 的路由控制框架：`koa-ts-controllers`
 import Boom from '@hapi/Boom';
+import {Sequelize} from 'sequelize-typescript';
+import path from 'path';
+import KoaBody from 'koa-body';
+import jwt from 'jsonwebtoken';
+import KoaStaticCache from 'koa-static-cache';
 
-const app = new Koa();
-const router = new KoaRouter(); //注册路由
 
 (async ()=>{
+    const app = new Koa();
+    const router = new KoaRouter(); //注册路由
+
+    //连接数据库
+    const db = new Sequelize('mysql2', 'root', '123',{
+        ...configs.database,
+        models: [__dirname + '/modules/**/*']
+    }); //红杠报错？ password不能上null，替换成undefined即可；
+
+    //注册路由
     await bootstrapControllers(app, {
         router: router,  //使用的路由库
         basePath: '/api',//设置访问接口路径的前缀，`/api`。
@@ -52,6 +65,3 @@ const router = new KoaRouter(); //注册路由
         console.log(`服务器启动成功：http://${configs.server.host}:${configs.server.port}`)
     })
 })()
-
-
-
