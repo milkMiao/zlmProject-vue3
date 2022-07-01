@@ -1,67 +1,32 @@
-import configs from './config/index';
-import Koa, {Context, Next} from 'koa'; //红色杠？因为koa是js写的，需要安装ts解析声明 -- npm i -D @types/koa
-import KoaRouter from 'koa-router' //注册路由
-import { bootstrapControllers } from 'koa-ts-controllers' //选择了一个基于 `TypeScript` 的路由控制框架：`koa-ts-controllers`
-import Boom from '@hapi/Boom';
-import {Sequelize} from 'sequelize-typescript';
-import path from 'path';
-import KoaBody from 'koa-body';
-import jwt from 'jsonwebtoken';
-import KoaStaticCache from 'koa-static-cache';
+// 安装npm i koa  ,import koa报红杠杠---koa是js写的，需要安装类型声明器
+// npm i --save-dev @types/koa
 
+// npm i -D ts-node-dev 热重载
+// npm i typescript 
+import configs from './configs/index';
+import Koa from 'koa';
+import KoaRouter from 'koa-router';
+import { bootstrapControllers } from 'koa-ts-controllers' //koa-ts-controllers 的主要函数，用来初始化应用控制器和路由绑定。
+import path from 'path' 
+import koaBodyParser from 'koa-bodyparser' //
+
+const app = new Koa();
+const router = new KoaRouter();
 
 (async ()=>{
-    const app = new Koa();
-    const router = new KoaRouter(); //注册路由
+  await bootstrapControllers(app,{
+    router: router,
+    basePath: '/api',
+    versions: [1],
+    controllers:[
+      __dirname + '/controllers/**/*'
+    ]
+  });
 
-    //连接数据库
-    const db = new Sequelize('mysql2', 'root', '123',{
-        ...configs.database,
-        models: [__dirname + '/modules/**/*']
-    }); //红杠报错？ password不能上null，替换成undefined即可；
-
-    //注册路由
-    await bootstrapControllers(app, {
-        router: router,  //使用的路由库
-        basePath: '/api',//设置访问接口路径的前缀，`/api`。
-        versions: [1],   //接口版本，会附加到 `basePath` 之后，`/api/v1`。
-        controllers: [   //控制器类文件的存放目录
-            __dirname + 'controllers/**/*'
-        ],
-        errorHandler: async (err: any, ctx: Context) => {
-            console.log(err);
-
-            let status = 500;
-            let body: any = {
-                statusCode: status,
-                error: "Internal Server error",
-                message: "An internal server error occurred"
-            }
-
-            if (err.output) {
-                status = err.output.statusCode;
-                body = {...err.output.payload};
-                if (err.data) {
-                    body.errorDetails = err.data;
-                }
-            }
-
-            ctx.status = status;
-            ctx.body = body;
-        }
-    });
-
-    //对未命中的路由（不存在的api）进行一个单独的处理。
-    // 以上需要注意：
-    // 1、- `await`
-    // 2、- `router.all` 放在 `bootstrapControllers` 后面否则每次请求都会先处理 `'*'`。
-    router.all('*', async ctx => {
-        throw Boom.notFound();
-    });
-
-    app.use( router.routes() ); // 注册路由到koa中间件
-
-    app.listen( configs.server.host , configs.server.port, ()=>{
-        console.log(`服务器启动成功：http://${configs.server.host}:${configs.server.port}`)
-    })
+  // 注册路由到koa中间件
+  app.use( koaBodyParser() );
+  app.use( router.routes() );
+  app.listen( configs.server.port, configs.server.host, () => {
+    console.log(`服务启动成功：http://${configs.server.host}:${configs.server.port}`);
+  })
 })()
