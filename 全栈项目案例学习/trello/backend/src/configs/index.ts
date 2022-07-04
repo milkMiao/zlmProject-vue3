@@ -1,4 +1,4 @@
-import databaseConfig from './databse.json'
+import databaseConfig from './database.json'
 import path from 'path';
 
 interface IDatabaseConfig {

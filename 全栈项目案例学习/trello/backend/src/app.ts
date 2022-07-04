@@ -8,12 +8,21 @@ import Koa,{Context} from 'koa';
 import KoaRouter from 'koa-router';
 import { bootstrapControllers, Controller } from 'koa-ts-controllers' //koa-ts-controllers 的主要函数，用来初始化应用控制器和路由绑定。
 import path from 'path' 
-import koaBodyParser from 'koa-bodyparser' //
-
-const app = new Koa();
-const router = new KoaRouter();
+import koaBodyParser from 'koa-bodyparser'
+import Boom from '@hapi/boom'
+import { Sequelize } from 'sequelize-typescript'; //提供的一个类
+import console from 'console';
 
 (async ()=>{
+  const app = new Koa();
+  const router = new KoaRouter();
+
+  //链接数据库
+  const db = new Sequelize({
+    ...configs.database,
+    models: [__dirname + '/models/**/*']
+  })
+  
   await bootstrapControllers(app,{
     router: router,
     basePath: '/api',
@@ -37,6 +46,11 @@ const router = new KoaRouter();
       ctx.body = body
     }
   });
+
+  //未命中的路由（不存在的api）进行一个单独的处理
+  router.all('*' ,async ctx=>{
+    throw Boom.notFound('未注册路由')
+  })
 
   // 注册路由到koa中间件
   app.use( koaBodyParser() );
