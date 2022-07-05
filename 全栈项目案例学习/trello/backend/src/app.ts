@@ -4,14 +4,15 @@
 // npm i -D ts-node-dev 热重载
 // npm i typescript 
 import configs from './configs/index';
-import Koa,{Context} from 'koa';
+import Koa,{Context, Next} from 'koa';
 import KoaRouter from 'koa-router';
-import { bootstrapControllers, Controller } from 'koa-ts-controllers' //koa-ts-controllers 的主要函数，用来初始化应用控制器和路由绑定。
+import { bootstrapControllers, Controller, Ctx } from 'koa-ts-controllers' //koa-ts-controllers 的主要函数，用来初始化应用控制器和路由绑定。
 import path from 'path' 
 import koaBodyParser from 'koa-bodyparser'
 import Boom from '@hapi/boom'
 import { Sequelize } from 'sequelize-typescript'; //提供的一个类
 import console from 'console';
+import jwt from 'jsonwebtoken'
 
 (async ()=>{
   const app = new Koa();
@@ -21,6 +22,15 @@ import console from 'console';
   const db = new Sequelize({
     ...configs.database,
     models: [__dirname + '/models/**/*']
+  })
+
+  //请求头信息做鉴权处理 【authorization 请求头Headers里是否存在】
+  app.use(async (ctx:Context , next: Next)=>{
+    let token = ctx.headers['authorization']
+    if(token){
+      ctx.userInfo = jwt.verify(token , configs.jwt.privateKey)
+    }
+    await next();
   })
   
   await bootstrapControllers(app,{

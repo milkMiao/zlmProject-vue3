@@ -9,7 +9,7 @@ import jwt from 'jsonwebtoken';
 import configs from '../configs';
 @Controller('/user')
 export class userController {
-    //用户注册
+    //1、用户注册
     @Post('/register')
     async register(
         @Ctx() ctx: Context,
@@ -37,7 +37,7 @@ export class userController {
         }
     }
 
-    //用户登陆
+    //2、用户登陆
     @Post('/login')
     async login(
         @Ctx() ctx: Context,
@@ -63,9 +63,9 @@ export class userController {
             id: user.id,
             name: user.name
         };
-
+        //登陆成功，保留token
         let token = jwt.sign( userInfo, configs.jwt.privateKey );
-        ctx.set('authorization', token);
+        ctx.set('authorization', token);//放到请求头Headers里
 
         return userInfo;
     }
