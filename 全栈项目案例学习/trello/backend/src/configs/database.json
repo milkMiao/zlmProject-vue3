@@ -2,25 +2,24 @@
   "development": {
     "username": "root",
     "password": "123",
-    "database": "database_development",
+    "database": "trello_app_development",
     "host": "127.0.0.1",
-    "dialect": "mysql",
-    "timezone": "+8:00"
+    "dialect": "mysql"
   },
   "test": {
     "username": "root",
     "password": "123",
-    "database": "database_test",
+    "database": "trello_app_test",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "timezone": "+8:00"
+    "timezone": "2022-07-04"
   },
   "production": {
     "username": "root",
     "password": "123",
-    "database": "database_production",
+    "database": "trello_app_production",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "timezone": "+8:00"
+    "timezone": "2022-07-04 21:48:20"
   }
 }

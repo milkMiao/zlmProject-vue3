@@ -7,7 +7,6 @@ interface IDatabaseConfig {
     database: string;
     host: string;
     dialect: 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'mariadb';
-    timezone: string;
 }
 
 const configs = {
@@ -16,14 +15,20 @@ const configs = {
             host: 'localhost',
             port: 8080
         },
-        database: databaseConfig.development as IDatabaseConfig
+        database: databaseConfig.development as IDatabaseConfig,
+        jwt: {
+            privateKey: 'kaikeba'
+        }
     },
     test: {
         server: {
             host: 'localhost',
             port: 8080
         },
-        database: databaseConfig.test as IDatabaseConfig
+        database: databaseConfig.test as IDatabaseConfig,
+        jwt: {
+            privateKey: 'kaikeba'
+        }
     },
     production: {
         server: {
@@ -31,6 +36,9 @@ const configs = {
             port: 8080
         },
         database: databaseConfig.production as IDatabaseConfig,
+        jwt: {
+            privateKey: 'kaikeba'
+        }
     }
 };
 
