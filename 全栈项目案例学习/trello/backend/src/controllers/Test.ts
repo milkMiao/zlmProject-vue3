@@ -77,8 +77,8 @@ class TestController {
     }
 
     //鉴权接口处理，引入Flow！！！
-    @Get('/auth')
-    @Flow([authorization]) //从koa-ts-controllers引入Flow
+    @Get('/auth')          //使用 Flow 装饰器进行挂载
+    @Flow([authorization]) //从koa-ts-controllers引入Flow，类中的所有路由都会进行鉴权验证
     async auth(
         @Ctx() ctx: Context
     ) {
