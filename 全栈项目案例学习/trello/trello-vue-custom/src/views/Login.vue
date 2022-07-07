@@ -30,7 +30,21 @@
 
 <script>
 export default {
+    name: 'Login',
+    data(){
+        return {
+            
+        }
+    },
+    computed: {
+        username() {
+            // 我们很快就会看到 `params` 是什么
+            return this.$route.params.username
+        },
+    },
+    methods:{
 
+    }
 }
 </script>
 

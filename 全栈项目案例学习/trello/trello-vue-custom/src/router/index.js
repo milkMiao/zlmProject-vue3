@@ -32,8 +32,9 @@ const routes = [
     name: 'Board',
     component: Board,
     children: [
+      // http://localhost:8080/board/1/list/1/card/1
         {
-            path: 'list/:listId(\\d+)/card/:cardId(\\d+)',
+            path: 'list/:listId(\\d+)/card/:cardId(\\d+)', //弹框遮罩
             name: 'Card',
             component: Card
         }

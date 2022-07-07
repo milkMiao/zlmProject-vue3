@@ -1,4 +1,5 @@
 <template>
+ <!-- 弹框遮罩 -->
     <div class="window-overlay" style="display: block" v-if="card && list">
         <!--弹出式窗口-->
         <div class="popup">
@@ -102,13 +103,12 @@
     </div>
 </template>
 <script>
-// @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
-  name: 'Card',
-  components: {
-    // HelloWorld
-  }
+    name: 'Card',
+    components: {}
 }
 </script>
+
+<style>
+
+</style>

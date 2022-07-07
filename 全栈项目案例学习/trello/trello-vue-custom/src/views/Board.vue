@@ -313,7 +313,7 @@
     </div>
 
     <!--遮罩层-->
-    <div class="window-overlay" style="display: block">
+    <div class="window-overlay" style="display: none">
         <!--弹出式窗口-->
         <div class="popup">
 
@@ -547,7 +547,7 @@
 </template>
 <script>
 export default {
-
+    name: 'Board',
 }
 </script>
 
