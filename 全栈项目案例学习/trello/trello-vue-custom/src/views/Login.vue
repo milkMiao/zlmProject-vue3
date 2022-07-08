@@ -5,15 +5,15 @@
         <div class="section-wrapper">
             <div class="account-form">
                 <h1>登录到 Trello</h1>
-                <form id="register-form" method="POST">
+                <form id="register-form"  method="POST" @submit.prevent="loginSubmit">
                     <div>
                         <label>
-                            <input class="form-field" autofocus="autofocus" placeholder="输入用户名" />
+                            <input v-model="user.name" class="form-field" autofocus="autofocus" placeholder="输入用户名" />
                         </label>
                     </div>
                     <div>
                         <label>
-                            <input type="password" class="form-field" placeholder="输入密码" />
+                            <input v-model="user.password" type="password" class="form-field" placeholder="输入密码" />
                         </label>
                     </div>
                     <div>
@@ -33,17 +33,33 @@ export default {
     name: 'Login',
     data(){
         return {
-            
+            user: {
+                name: '',
+                password: ''
+            },
         }
     },
     computed: {
-        username() {
-            // 我们很快就会看到 `params` 是什么
-            return this.$route.params.username
-        },
+       
     },
     methods:{
-
+        async loginSubmit(){
+            if(this.user.name.trim()=='' || this.user.password.trim() ==''){
+                return this.$message({
+                    message:'用户名和密码不能为空',
+                    type:'error'
+                })
+            }
+            try {
+                await this.$store.dispatch('user/login',{
+                    ...this.user
+                })
+                this.$message.success('登陆成功！')
+                this.$router.push({name:'Home'})
+            } catch(e){
+                console.log('catch----',e)
+            }
+        }
     }
 }
 </script>

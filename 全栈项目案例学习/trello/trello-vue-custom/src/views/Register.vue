@@ -5,8 +5,7 @@
         <div class="section-wrapper">
             <div class="account-form">
                 <h1>注册 Trello</h1>
-                <!-- action="/register" method="POST"  -->
-                <form id="login-form" @submit.prevent="registerSubmit">
+                <form id="login-form" method="POST" @submit.prevent="registerSubmit">
                     <div>
                         <label>
                             <input v-model="user.name" class="form-field" autofocus="autofocus" placeholder="输入用户名"/>
@@ -30,16 +29,13 @@
                 </form>
             </div>
 
-            <!-- 错误信息提示组件：
-                 注：有可能用户疯狂点击，导致一直弹提示信息，甚至很多个提示信息显示，如何处理优化？【全局，组件销毁功能】
-            -->
-            <t-message></t-message>
         </div>
 
     </div>
 </template>
 <script>
-import TMessage from '@/components/TMessage/TMessage.vue';
+
+// import TMessage from '@/components/TMessage/TMessage.vue'; //挂载全局使用，无需单个引入
 export default {
     name: 'Register',
     data(){
@@ -52,33 +48,47 @@ export default {
         }
     },
     components: {
-        TMessage
+        // TMessage
     },
     computed: {
       
     },
     methods:{
-        registerSubmit(){
-            console.log('表单注册')
+        async registerSubmit(){
             if(this.user.name.trim() =='' || this.user.password.trim() ==''){
                 // 间隔时间最长，最后消失
-                this.$message({
-                    message:'111',
-                    duration: 1000
-                })
-                this.$message({
-                    message:'222',
-                    duration: 3000
-                })
-                this.$message({
-                    message:'333',
-                    duration: 2000
-                })
-                return;
-                return $message({
+                // this.$message({
+                //     message:'111',
+                //     duration: 1000
+                // })
+                // this.$message({
+                //     message:'222',
+                //     duration: 3000
+                // })
+                // this.$message({
+                //     message:'333',
+                //     duration: 2000
+                // })
+                // return;
+                return this.$message({
                     message: '用户名和密码不能为空',
                     type: 'error'
                 });
+            }
+            if(this.user.password !== this.user.rePassword){
+                return this.$message({
+                    message:'两次密码不一致，请重新输入',
+                    type:'error'
+                })
+            }
+            try {
+                await this.$store.dispatch('user/register',{
+                    ...this.user
+                })
+                this.$message.success('注册成功！')
+                this.$router.push({name:'Login'})
+            } catch(e){
+                console.log('catch----',e)
             }
         },
        
