@@ -9,6 +9,7 @@ let instance;
 let instances = [];
 let seed = 1;
 
+//message 充当于工厂函数
 const Message = function(options) {
     options = options || {};
     if (typeof options === 'string') {
