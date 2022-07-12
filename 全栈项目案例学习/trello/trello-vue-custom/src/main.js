@@ -8,7 +8,7 @@ import message from '@/components/TMessage/TMessage'
 Vue.config.productionTip = false
 //自定义选择框架插件，未使用默认vue2，vue3框架
 
-Vue.prototype.$message = message;//消息提示组件放在vue原型里
+Vue.prototype.$message = message;//消息提示组件放在vue原型里,使用 this.$message 即可
 new Vue({
   router,
   store,

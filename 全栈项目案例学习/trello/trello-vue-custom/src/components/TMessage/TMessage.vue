@@ -1,13 +1,14 @@
 <template>
     <transition name="message-fade" @after-leave="handleAfterLeave">
+     <!-- :style="positionStyle" -->
         <div
             :class="[
                 'message',
                 'message-' + type,
                 center ? 'is-center' : ''
             ]"
-            :style="positionStyle"
-            v-show="!closed"
+            :style="{top: offset + 'px'}"
+            v-if="!closed"
         >
             <p class="message-content">提示信息：{{message}}</p>
             <i class="icon icon-close"></i>
@@ -26,6 +27,7 @@
                 message: '',
                 center: true,
                 verticalOffset: 20,
+                offset: 20,
                 duration: 1000,
                 timer: null,
                 onClose: null
