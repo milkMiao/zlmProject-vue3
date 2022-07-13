@@ -16,7 +16,11 @@
             </div>
 
             <div class="popup-content">
-                <ul class="popup-menu-list">
+                <!-- 弹出式菜单-子项组件封装 -->
+                <slot name="popup-content-item"></slot> <!-- 插槽，在Theader组件内使用 -->
+                <!-- <t-popup-menu></t-popup-menu> -->
+                
+                <!-- <ul class="popup-menu-list">
                     <li><span>添加卡…</span></li>
                     <li><span>复制列表…</span></li>
                     <li><span>移动列表</span></li>
@@ -30,7 +34,7 @@
                 <hr/>
                 <ul class="popup-menu-list">
                     <li><span>将此列表进行归档</span></li>
-                </ul>
+                </ul> -->
             </div>
         </div>
     </div>
