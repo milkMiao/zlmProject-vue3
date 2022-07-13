@@ -26,17 +26,17 @@ const routes = [
   {
     path: '/',     //首页
     name: 'Home',
-    meta: {
-      requiresAuth: true // 添加鉴权标识
-    },
+    // meta: {
+    //   requiresAuth: true // 添加鉴权标识-权限管理
+    // },
     component: Home
   },
   {
     path: '/board/:id(\\d+)', //看板
     name: 'Board',
-    meta: {
-      requiresAuth: true // 添加鉴权标识
-    },
+    // meta: {
+    //   requiresAuth: true // 添加鉴权标识
+    // },
     component: Board,
     children: [
       // http://localhost:8080/board/1/list/1/card/1
@@ -65,7 +65,7 @@ const router = new VueRouter({
   routes
 })
 
-store.commit('user/initUserInfo');
+// store.commit('user/initUserInfo');//初始化用户信息
 
 //全局路由守卫：初始化 & 每次路由变化之后触发
 router.beforeEach((to, from, next) => {

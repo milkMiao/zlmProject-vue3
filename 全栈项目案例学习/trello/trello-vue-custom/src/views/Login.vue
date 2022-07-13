@@ -44,7 +44,7 @@ export default {
     },
     methods:{
         async loginSubmit(){
-            if(this.user.name.trim()=='' || this.user.password.trim() ==''){
+            if(this.user.name.trim()==='' || this.user.password.trim() ===''){
                 return this.$message({
                     message:'用户名和密码不能为空',
                     type:'error'

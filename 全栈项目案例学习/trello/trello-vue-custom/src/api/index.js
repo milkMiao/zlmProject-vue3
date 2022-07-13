@@ -29,7 +29,7 @@ axios.interceptors.response.use(response => { //响应拦截
     throw error;
 })
 
-export const register = data =>{
+export const register = data =>{ //代理配置 新建vue.config.js解决跨域等问题
    return axios({
         method:'post',
         url: '/user/register',

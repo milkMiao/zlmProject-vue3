@@ -53,17 +53,17 @@ export default {
     methods:{
         async registerSubmit(){
             if(this.user.name.trim() =='' || this.user.password.trim() ==''){
-                // return this.$message({
-                //     message: '用户名和密码不能为空',
-                //     type: 'error'
-                // });
+                return this.$message({
+                    message: '用户名和密码不能为空',
+                    type: 'error'
+                });
 
-                // 间隔时间最长，最后消失
-                this.$message({message:'111',duration: 1000,type:'error'})
-                this.$message({message:'222', duration: 3000,type: 'warning'})
-                this.$message({message:'333',duration: 2000, type: 'success'})
-                this.$message({message:'444',duration: 4000,type: 'info'})
-                return;
+                // 间隔时间最长，最后消失【多个提示框测试使用】
+                // this.$message({message:'111',duration: 1000,type:'error'})
+                // this.$message({message:'222', duration: 3000,type: 'warning'})
+                // this.$message({message:'333',duration: 2000, type: 'success'})
+                // this.$message({message:'444',duration: 4000,type: 'info'})
+                // return;
             }
             if(this.user.password !== this.user.rePassword){
                 return this.$message({

@@ -1,26 +1,7 @@
 <template>
   <div id="board">
     <!--头部-->
-    <header>
-        <div class="left">
-            <a href="" class="btn btn-icon">
-                <i class="icon icon-home"></i>
-            </a>
-            <a href="" class="btn btn-icon">
-                <i class="icon icon-board"></i>
-                <span class="txt">看板</span>
-            </a>
-        </div>
-        <a href="/" class="logo"></a>
-        <div class="right">
-            <a href="" class="btn btn-icon">
-                <i class="icon icon-add"></i>
-            </a>
-            <button class="avatar">
-                <span>Z</span>
-            </button>
-        </div>
-    </header>
+    <t-header></t-header>
 
     <!--正文-->
     <main>
@@ -284,8 +265,8 @@
     </main>
 
     <!--弹窗，可用于对话框、弹出式菜单等-->
-    <!--弹出式菜单-->
-    <div class="popup" style="left: 930px;top: 98px;display: block">
+    <!--弹出式菜单， 已单独拿出组件TPopup-->
+    <div class="popup" style="left: 930px;top: 98px;display: none">
         <div class="popup-header">
             <span class="popup-title">Title</span>
             <a class="popup-header-close">
@@ -546,8 +527,12 @@
   </div>
 </template>
 <script>
+import THeader from '@/components/THeader.vue'
 export default {
     name: 'Board',
+    components: {
+        THeader
+    }
 }
 </script>
 

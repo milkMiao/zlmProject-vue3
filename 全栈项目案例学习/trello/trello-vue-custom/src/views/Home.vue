@@ -5,7 +5,8 @@
   </div> -->
   <div id="home">
     <!--头部-->
-    <header>
+    <THeader></THeader>
+    <!-- <header>
         <div class="left">
             <a href="" class="btn btn-icon">
                 <i class="icon icon-home"></i>
@@ -24,7 +25,7 @@
                 <span>Z</span>
             </button>
         </div>
-    </header>
+    </header> -->
 
     <main>
 
@@ -52,12 +53,12 @@
 </template>
 
 <script>
-// import HelloWorld from '@/components/HelloWorld.vue'
+import THeader from '@/components/THeader.vue'
 
 export default {
   name: 'Home',
   components: {
-    // HelloWorld
+    THeader
   }
 }
 </script>
