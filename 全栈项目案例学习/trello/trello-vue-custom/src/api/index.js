@@ -29,6 +29,7 @@ axios.interceptors.response.use(response => { //响应拦截
     throw error;
 })
 
+//1、用户User
 export const register = data =>{ //代理配置 新建vue.config.js解决跨域等问题
    return axios({
         method:'post',
@@ -43,3 +44,19 @@ export const login = data => {
         data
     });
 };
+
+//2、面板Board
+export const getBoards = data=>{ //获取全部面板
+    return axios({
+        method: 'get',
+        url: '/board'
+    })
+}
+//新增面板
+export const postBoard = data=>{
+    return axios({
+        method: 'post',
+        url: '/board',
+        data
+    })
+}

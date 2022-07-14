@@ -1,4 +1,4 @@
-import { register,login } from "../../api"
+import { register,login } from "@/api" //注意：@表示--- src目录
 
 export default {
   state: {
