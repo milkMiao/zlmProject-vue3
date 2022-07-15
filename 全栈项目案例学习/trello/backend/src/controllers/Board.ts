@@ -7,7 +7,9 @@ import { getAndValidateBoard } from '../validator/Board'
 @Controller('/board')
 @Flow([authorization]) 
 export class BoardController {
-    //1、创建面板
+    /*
+    * 1、创建面板
+    */
     @Post('')
     async addBoard(
         @Ctx() ctx: Context,
@@ -26,8 +28,9 @@ export class BoardController {
         return board;
     }
 
-    //2、获取登陆用户所有看板
-    // http://localhost:8080/api/v1/board
+    /*
+    * 2、获取登陆用户所有看板  http://localhost:8080/api/v1/board
+    */
     @Get('')
     async getBoards(
         @Ctx() ctx: Context
@@ -39,7 +42,11 @@ export class BoardController {
         return boards
     }
 
-    //3、获取当前登陆用户指定的一个看板详情
+    /*
+    * 3、获取当前登陆用户指定的一个看板详情
+    *  /list/1 ==>指的是：获取id为1的列表  【Params方法获取参数】
+    *  /list?boardId=1  ===》指的是：面板id为1的列表 【Query方法获取参数】
+    */
     @Get('/:id(\\d+)')
     async getBoard(
         @Ctx() ctx: Context,
@@ -57,7 +64,9 @@ export class BoardController {
         return board;
     }
 
-    //4、更新指定看板
+    /*
+    * 4、更新指定看板
+    */
     @Put('/:id(\\d+)')
     async updateBoard(
         @Ctx() ctx: Context,
@@ -72,7 +81,9 @@ export class BoardController {
         ctx.status = 204;
     }
 
-    //5、删除指定面板
+    /*
+    * 5、删除指定面板
+    */
     @Delete('/:id(\\d+)')
     async deleteBoard(
         @Ctx() ctx: Context,
