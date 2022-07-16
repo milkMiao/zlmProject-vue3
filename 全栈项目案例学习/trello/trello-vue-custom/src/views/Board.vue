@@ -532,6 +532,14 @@ export default {
     name: 'Board',
     components: {
         THeader
+    },
+    computed:{
+        board(){ //获取当前登陆用户指定的一个看板详情
+            return this.$store.getters['board/getBoard'](this.$route.params.id)
+        }
+    },
+    created(){
+        
     }
 }
 </script>

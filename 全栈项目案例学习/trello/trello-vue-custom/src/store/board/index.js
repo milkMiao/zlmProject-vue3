@@ -9,7 +9,13 @@ export default {
     //面板：设置为null，方便我们去判断当前是首次获取还是获取到的是一个空数据
     boards: null,
   },
-
+  getter: {
+    getBoard: ({boards}) => {
+      id => {
+        Array.isArray(boards) ? boards.find(board => board.id == id) : null
+      }
+    }
+  },
   mutations: {
     updateBoards: (state, data)=>{
         state.boards = data
