@@ -52,11 +52,27 @@ export const getBoards = data=>{ //获取全部面板
         url: '/board'
     })
 }
-//新增面板
+// 新增面板
 export const postBoard = data=>{
     return axios({
         method: 'post',
         url: '/board',
         data
+    })
+}
+// 获取一个面板
+export const getBoard = id => {
+    return axios({
+        url: '/board/' + id
+    })
+}
+
+//3、获取一个指定面板下的所有列表集合
+export const getLists = boardId => {
+    return axios({
+        url: '/list/',
+        params:{
+            boardId
+        }
     })
 }

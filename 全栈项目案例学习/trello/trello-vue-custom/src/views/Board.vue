@@ -4,7 +4,7 @@
     <t-header></t-header>
 
     <!--正文-->
-    <main>
+    <main v-if="true">
 
         <h2>
             test
@@ -18,6 +18,15 @@
 
 
             <!--面板列表容器-->
+            <!-- <t-list
+                v-for="list of lists"
+                :key="list.id"
+                :data="list"
+
+                @dragStart="dragStart"
+                @dragMove="dragMove"
+                @dragEnd="dragEnd"
+            ></t-list> -->
             <div class="list-wrap">
 
                 <div class="list-placeholder"></div>
@@ -535,11 +544,19 @@ export default {
     },
     computed:{
         board(){ //获取当前登陆用户指定的一个看板详情
-            return this.$store.getters['board/getBoard'](this.$route.params.id)
+            // return this.$store.getters['board/getBoard'](this.$route.params.id)
+        },
+        lists(){
+            // return this.$store.getters['list/getLists'](this.$route.params.id)
         }
     },
     created(){
-        
+        if(!this.board){ //获取一个面板
+            // this.$route.dispatch('board/getBoard', this.$route.params.id)
+        }
+        if(!lists.length){// 获取一个指定面板下的所有列表集合
+            // this.$route.dispatch('list/getLists', this.$route.params.id)
+        }
     }
 }
 </script>

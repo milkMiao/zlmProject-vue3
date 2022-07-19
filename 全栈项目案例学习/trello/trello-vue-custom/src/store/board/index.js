@@ -1,5 +1,5 @@
 //Board 面板
-// import { getBoards,postBoard } from "@/api"
+// import { getBoards,postBoard, getBoard } from "@/api"
 import * as api from '@/api'; //等价===》上面书写方式
 
 export default {
@@ -42,6 +42,19 @@ export default {
         }
     },
 
+    //获取一个面板
+    getBoard: async ({commit}, id) => {
+        try {
+            let rs = await api.getBoard(id);
+
+            commit('addBoard', rs.data);
+
+            return rs;
+        } catch (e) {
+            throw e;
+        }
+    },
+
     //新增面板（输入面板名称）
     postBoard: async ({commit}, data)=>{
       try {
@@ -54,7 +67,6 @@ export default {
         throw e
       }
     }
-  
   },
   modules: {
 
