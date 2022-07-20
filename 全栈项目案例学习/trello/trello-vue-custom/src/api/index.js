@@ -67,7 +67,7 @@ export const getBoard = id => {
     })
 }
 
-//3、获取一个指定面板下的所有列表集合
+//3、获取一个指定面板下的所有列表集合 list
 export const getLists = boardId => {
     return axios({
         url: '/list/',
@@ -82,5 +82,17 @@ export const postList = data => {
         method: 'post',
         url: '/list',
         data
+    })
+};
+//编辑一个指定的列表
+export const putList = data => {
+    return axios({
+        method: 'put',
+        url: '/list/' + data.id,
+        data: {
+            boardId: data.boardId,
+            name: data.name,
+            order: data.order
+        }
     })
 };

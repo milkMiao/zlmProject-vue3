@@ -29,7 +29,7 @@
             ></t-list> -->
 
             <!--面板列表容器,静态文本-->
-            <div class="list-wrap list-adding" style="display:none;">
+            <div class="list-wrap list-adding">
 
                 <div class="list-placeholder"></div>
 
@@ -430,7 +430,9 @@ export default {
                     this.$message.success('提交成功');
                     this.$refs.newListName.value = '';
                     this.listAdding = true;
-                } catch (e) {}
+                } catch (e) {
+                    console.log("catch---e---", e)
+                }
             }
         }
 
