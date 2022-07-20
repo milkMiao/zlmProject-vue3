@@ -76,3 +76,11 @@ export const getLists = boardId => {
         }
     })
 }
+//新增一个新的列表  
+export const postList = data => {
+    return axios({
+        method: 'post',
+        url: '/list',
+        data
+    })
+};
