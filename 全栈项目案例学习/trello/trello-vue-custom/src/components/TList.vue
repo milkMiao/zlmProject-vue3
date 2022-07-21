@@ -1,13 +1,14 @@
 <!--面板列表容器-->
 <template>
-    <div class="list-wrap" :class="{ 'list-adding':true }">
+    <!-- :data-order="data.order"  -->
+    <div class="list-wrap list-wrap-content" :class="{ 'list-adding':false }" >
         <!-- 拖拽的list背景层 -->
         <div class="list-placeholder" ref="listPlaceholder"></div>
 
         <div class="list" ref="list" style="border:3px solid blueviolet;">
             <div class="list-header" ref="listHeader" style="background-color:pink;">
             <!-- @mousedown.prevent 阻止textarea等的默认行为 -->
-                <textarea class="form-field-input" ref="newBoardListName" @mousedown.prevent>To Do</textarea>
+                <textarea class="form-field-input" ref="newBoardListName" @mousedown.prevent @blur="editListName">To Do</textarea>
                 <div class="extras-menu" @mousedown.prevent>
                     <span class="icon icon-more"></span>
                 </div>
@@ -170,7 +171,7 @@ export default {
     name: 'TList',
     props: {
         data: {
-            type: Object
+            type: Object,
         }
     },
     data(){
@@ -274,6 +275,18 @@ export default {
                 }
             }
         },
+        async editListName(){//编辑列表名称,textarea输入框
+            let {value, innerHTML} = this.$refs.newBoardListName;
+            // console.log(val, this.$refs.newBoardListName.innerHTML);
+
+            if (value !== innerHTML) {
+                await this.$store.dispatch('list/editList', {
+                    boardId: this.data.boardId,
+                    id: this.data.id,
+                    name: value
+                })
+            }
+        }
     }
 }
 </script>

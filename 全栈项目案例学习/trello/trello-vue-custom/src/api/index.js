@@ -84,7 +84,7 @@ export const postList = data => {
         data
     })
 };
-//编辑一个指定的列表
+//编辑一个指定的列表（拖拽后需要对列表数据更新）
 export const putList = data => {
     return axios({
         method: 'put',

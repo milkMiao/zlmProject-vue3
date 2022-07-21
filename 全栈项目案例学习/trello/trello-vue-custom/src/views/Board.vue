@@ -18,7 +18,11 @@
 
 
             <!--面板列表容器-->
-            <t-list></t-list>
+            <t-list 
+                @dragStart="dragStart"
+                @dragMove="dragMove"
+                @dragEnd="dragEnd"
+            ></t-list>
             <!-- <t-list
                 v-for="list of lists"
                 :key="list.id"
@@ -434,8 +438,83 @@ export default {
                     console.log("catch---e---", e)
                 }
             }
-        }
+        },
 
+        //拖拽相关事件
+        //拖拽实现---两个list的位置互换！！！
+        //实现的核心逻辑：【当前元素插入---到当前元素的前一个元素or后一个元素】元素存储的位置也会发生变化的！
+        dragStart(e) {
+            let el = e.component.$el;
+            let board = el.parentNode;
+            let lists = [...board.querySelectorAll('.list-wrap')];//获取列表集合
+            el._index = lists.findIndex(list => list === el);//拖拽前-当前列表的位置记录_index
+        },
+        dragMove(e) { //列表组件拖拽交换位置！！！
+            let el = e.component.$el;
+            let board = el.parentNode;
+            let lists = [...board.querySelectorAll('.list-wrap')];
+            let currentIndex = lists.findIndex( list => list === el );
+
+            lists.forEach( (list, index) => {
+                if ( index !== currentIndex  ) {
+                    let clientRect = list.getBoundingClientRect(); //获得页面中某个元素的左，上，右和下分别相对浏览器视窗的位置
+                    if (
+                        e.x >= clientRect.left
+                        &&
+                        e.x <= clientRect.right
+                        &&
+                        e.y >= clientRect.top
+                        &&
+                        e.y <= clientRect.bottom
+                    ) {
+                        if (currentIndex < index) {
+                            board.insertBefore(el, list.nextElementSibling);//当前列表的下一个列表前插入
+                        } else {
+                            board.insertBefore(el, list);//当前列表前插入
+                        }
+                    }
+                }
+            } );
+        },
+        async dragEnd(e) {
+
+            let el = e.component.$el; //拿到元素
+            let board = el.parentNode;//父级节点
+            //注意：TList子组件list-wrap同级，增加list-wrap-content属性，为了计算lists列表的总数【不包含--添加另一个列表模块】
+            let lists = [...board.querySelectorAll('.list-wrap-content')];
+            let currentIndex = lists.findIndex(list => list === el);
+            console.log("dragEnd______board", board)
+
+            // 判断一下当前这个元素是否移动了
+            // console.log(el._index, currentIndex);
+            if (el._index !== currentIndex) {
+            //元素移动逻辑处理如下：
+                let newOrder;//定义最新的order值
+
+                // 1、TList子组件中class="list-wrap" 增加:data-order="data.order"属性操作
+                // 获取当前所在位置的上一个列表和下一个列表的order值
+                let prevOrder = lists[currentIndex - 1] && parseFloat( lists[currentIndex - 1].dataset.order );
+                let nextOrder = lists[currentIndex + 1] && parseFloat( lists[currentIndex + 1].dataset.order );
+                // console.log(prevOrder, nextOrder);
+
+                if (currentIndex === 0) {
+                    newOrder = nextOrder / 2;
+                } else if (currentIndex === lists.length - 1) {
+                    newOrder = prevOrder + 65535;
+                } else {
+                    newOrder = prevOrder + (nextOrder - prevOrder) / 2;//下一个 减 前一个 除以2 取得差值；
+                }
+                console.log("dragEnd______newOrder", newOrder)
+
+                await this.$store.dispatch('list/editList', {
+                    boardId: this.board.id,
+                    id: e.component.data.id, //当前对象元素的属性
+                    order: newOrder
+                })
+
+            }
+
+        }
     }
 }
 </script>

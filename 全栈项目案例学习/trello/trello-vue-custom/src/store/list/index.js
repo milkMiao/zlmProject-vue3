@@ -28,7 +28,7 @@ export default {
         addList: (state, data) => {
             state.lists = [...state.lists, data];
         },
-        //更新一个列表
+        //更新一个列表（拖拽后需要对列表数据更新）
         updateList: (state, data) => {
             state.lists = state.lists.map( list => {
                 if (list.id === data.id) {
@@ -61,7 +61,7 @@ export default {
                 throw e;
             }
         },
-        //编辑一个列表
+        //编辑一个列表（拖拽后需要对列表数据更新）
         editList: async ({commit}, data) => {
             try {
                 let rs = await api.putList(data);
