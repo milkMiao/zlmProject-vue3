@@ -75,7 +75,7 @@ export class BoardListController{
 
 
     /*
-    *  3、获取指定列表详情
+    *  3、获取指定列表
     */
     @Get('/:id(\\d+)')
     async getList (
