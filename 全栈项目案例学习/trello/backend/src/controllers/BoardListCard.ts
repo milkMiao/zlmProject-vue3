@@ -1,4 +1,4 @@
-//列表内-卡片
+//列表内-卡片列表
 import {
     Controller,
     Get,
@@ -13,10 +13,10 @@ import {
 } from 'koa-ts-controllers'
 import authorization from '../middlewares/authorization';
 import { Context } from 'koa'
-import { BoardListCard as BoardListCardModel} from '../models/BoardListCard';
-import { Comment as CommentModel} from '../models/Comment';
-import { CardAttachment as CardAttachmentModel} from '../models/CardAttachment';//卡片附件
-import { Attachment as AttachmentModel} from '../models/Attachment';
+import { BoardListCard as BoardListCardModel} from '../models/BoardListCard';//卡片列表
+import { Comment as CommentModel} from '../models/Comment';//卡片内评论
+import { CardAttachment as CardAttachmentModel} from '../models/CardAttachment';//卡片和附件的中间表-关联关系
+import { Attachment as AttachmentModel} from '../models/Attachment';//附件表
 import { 
     PostAddCardBody, GetCardsQuery, PutUpdateCardBody, 
     getAndValidateBoardListCard, getAndValidateCardAttachment
@@ -53,7 +53,8 @@ export class BoardListCardController{
     }
 
     /**
-     * 获取卡片列表
+     * 获取卡片列表（卡片内的附件，评论等信息）
+     * 关联表：BoardListCardModel  CardAttachmentModel  AttachmentModel
     */
     @Get('')
     public async getCards(
@@ -64,10 +65,55 @@ export class BoardListCardController{
 
         await getAndValidateBoardList(boardListId, ctx.userInfo.id);
         let boardListCards = await BoardListCardModel.findAll({
-            where: { boardListId },
+            where: { 
+                boardListId
+            },
             order: [['id', 'asc']],
+            include: [
+                {
+                    model: CommentModel,//评论
+                    attributes: ['id']
+                },
+                {
+                    model: CardAttachmentModel,//卡片和附件中间表-关联关系
+                    include: [
+                        {
+                            model: AttachmentModel //附件表
+                        }
+                    ]
+                }
+            ]
         });
-        return boardListCards;
+
+        let boardListCardsData = boardListCards.map( (card: BoardListCardModel) => {
+            // 处理附件的路径和封面
+            let coverPath = '';
+            let attachments = card.attachments.map( attachment => {
+                let data = attachment.toJSON() as CardAttachmentModel & {path: string};
+                data.path = configs.storage.prefix + '/' + data.detail.name;
+
+                if (data.isCover) {//附件是封面
+                    coverPath = data.path;
+                }
+                console.log("处理附件&路径", data)
+                return data;
+            } );
+            //数据格式化处理
+            return {
+                id: card.id,
+                userId: card.userId,
+                boardListId: card.boardListId,
+                name: card.name,
+                description: card.description,
+                order: card.order,
+                createdAt: card.createdAt,
+                updatedAt: card.updatedAt,
+                attachments: attachments,//附件
+                coverPath: coverPath,//封面路径
+                commentCount: card.comments.length //评论数
+            }
+        } );
+        return boardListCardsData;
     }
 
     /**

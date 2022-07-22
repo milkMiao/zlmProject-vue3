@@ -1,3 +1,4 @@
+//卡片内的--附件表
 import {
     AutoIncrement, BelongsTo,
     Column,

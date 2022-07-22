@@ -16,7 +16,43 @@
 
             <div class="list-cards">
 
-                <div class="list-card">
+                <div class="list-card" v-for="card of cards" :key="card.id">
+                    <div class="list-card-cover"
+                            style="background-image: url(https://trello-attachments.s3.amazonaws.com/5ddf961b5e861107e5f2de49/200x200/96d8fa19e335be20c102d394ef4bed71/logo.png);"></div>
+                    <div class="list-card-title">{{card.name}}</div>
+                    <div class="list-card-badges">
+                        <div class="badge" v-if="card.description"><!-- 简介 -->
+                            <span class="icon icon-description"></span>
+                        </div>
+                        <div class="badge" v-if="card.commentCount >0"><!-- 评论 -->
+                            <span class="icon icon-comment"></span>
+                            <span class="text">{{card.commentCount}}</span>
+                        </div>
+                        <div class="badge" v-if="card.attachments.length >0"><!-- 附件 -->
+                            <span class="icon icon-attachment"></span>
+                            <span class="text">{{card.attachments.length}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="list-card" style="display:none;">
+                    <div class="list-card-title">接口代码编写及测试</div>
+                    <div class="list-card-badges">
+                        <div class="badge">
+                            <span class="icon icon-description"></span>
+                        </div>
+                        <div class="badge">
+                            <span class="icon icon-comment"></span>
+                            <span class="text">2</span>
+                        </div>
+                        <div class="badge">
+                            <span class="icon icon-attachment"></span>
+                            <span class="text">5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="list-card" style="display:none;">
                     <div class="list-card-cover"
                             style="background-image: url(https://trello-attachments.s3.amazonaws.com/5ddf961b5e861107e5f2de49/200x200/96d8fa19e335be20c102d394ef4bed71/logo.png);"></div>
                     <div class="list-card-title">接口代码编写及测试</div>
@@ -35,7 +71,7 @@
                     </div>
                 </div>
 
-                <div class="list-card">
+                <div class="list-card" style="display:none;">
                     <div class="list-card-title">接口代码编写及测试</div>
                     <div class="list-card-badges">
                         <div class="badge">
@@ -52,7 +88,7 @@
                     </div>
                 </div>
 
-                <div class="list-card">
+                <div class="list-card" style="display:none;">
                     <div class="list-card-cover"
                             style="background-image: url(https://trello-attachments.s3.amazonaws.com/5ddf961b5e861107e5f2de49/200x200/96d8fa19e335be20c102d394ef4bed71/logo.png);"></div>
                     <div class="list-card-title">接口代码编写及测试</div>
@@ -71,24 +107,7 @@
                     </div>
                 </div>
 
-                <div class="list-card">
-                    <div class="list-card-title">接口代码编写及测试</div>
-                    <div class="list-card-badges">
-                        <div class="badge">
-                            <span class="icon icon-description"></span>
-                        </div>
-                        <div class="badge">
-                            <span class="icon icon-comment"></span>
-                            <span class="text">2</span>
-                        </div>
-                        <div class="badge">
-                            <span class="icon icon-attachment"></span>
-                            <span class="text">5</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="list-card">
+                <div class="list-card" style="display:none;">
                     <div class="list-card-cover"
                             style="background-image: url(https://trello-attachments.s3.amazonaws.com/5ddf961b5e861107e5f2de49/200x200/96d8fa19e335be20c102d394ef4bed71/logo.png);"></div>
                     <div class="list-card-title">接口代码编写及测试</div>
@@ -107,26 +126,7 @@
                     </div>
                 </div>
 
-                <div class="list-card">
-                    <div class="list-card-cover"
-                            style="background-image: url(https://trello-attachments.s3.amazonaws.com/5ddf961b5e861107e5f2de49/200x200/96d8fa19e335be20c102d394ef4bed71/logo.png);"></div>
-                    <div class="list-card-title">接口代码编写及测试</div>
-                    <div class="list-card-badges">
-                        <div class="badge">
-                            <span class="icon icon-description"></span>
-                        </div>
-                        <div class="badge">
-                            <span class="icon icon-comment"></span>
-                            <span class="text">2</span>
-                        </div>
-                        <div class="badge">
-                            <span class="icon icon-attachment"></span>
-                            <span class="text">5</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="list-card">
+                <div class="list-card" style="display:none;">
                     <div class="list-card-cover"
                             style="background-image: url(https://trello-attachments.s3.amazonaws.com/5ddf961b5e861107e5f2de49/200x200/96d8fa19e335be20c102d394ef4bed71/logo.png);"></div>
                     <div class="list-card-title">接口代码编写及测试</div>
@@ -148,7 +148,6 @@
                 <div class="list-card-add-form">
                     <textarea class="form-field-input" placeholder="为这张卡片添加标题……"></textarea>
                 </div>
-
             </div>
 
             <div class="list-footer">
@@ -186,7 +185,56 @@ export default {
                 downElementY: 0
             },
             listAdding: false,
+            cards:[ //卡片列表
+                {
+                    id:1, 
+                    userId:3, 
+                    boardListId:2, 
+                    name:'board-list-card1', 
+                    description:'接口代码编写及测试', 
+                    order: 536, 
+                    createAt:'2022-07-01', 
+                    updateAt:'2022-07-01',
+                    commentCount: 2,//评论
+                    attachments:[//附件
+                        {
+                            id:10,
+                            userId:3,
+                            boardListCardId:2,
+                            isCover: false,
+                            createAt: '2022-07-02T08:02:21.000Z',
+                            updateAt: '2022-07-03T08:02:21.000Z',
+                            detail: {
+                                id:10,
+                                userId:3,
+                                originName: 'originName-7',
+                                type:'image/png',
+                                size: 10000,
+                                createAt: '2022-07-02T08:02:21.000Z',
+                                updateAt: '2022-07-03T08:02:21.000Z',
+                            }
+                        }
+                    ],
+                    coverPath: '/public/attachments/attachment-2',//封面路径
+                },
+                {id:2, userId:2, boardListId:6, name:'board-list-card2', description:'board-list-card2', order: 131072, createAt:'2022-07-02T08:02:21.000Z', updateAt:'2022-07-03T08:02:21.000Z',commentCount: 3,attachments:[]},
+                {id:3, userId:3, boardListId:4, name:'board-list-card3', description:'board-list-card3', order: 196608, createAt:'2022-07-07T08:02:21.000Z', updateAt:'2022-07-09T08:02:21.000Z',commentCount: 10,attachments:[]},
+                {id:4, userId:1, boardListId:2, name:'board-list-card4', description:'board-list-card4', order: 327608, createAt:'2022-07-05T08:02:21.000Z', updateAt:'2022-07-03T08:02:21.000Z',commentCount: 9,attachments:[]},
+            ]
         }
+    },
+    computed: {
+        //获取卡片信息
+        // cards(){
+        //     // return this.$store.getters['card/getCards'](this.data.id)
+        // }
+    },
+    //注意：在created 中被await 修饰的代码，执行顺序都在mounted内部--同步代码之后。
+    async created() {
+        //查询卡片信息
+        // if(!this.cards.length){
+        //     await this.$store.dispatch('card/getCards', this.data.id);
+        // }
     },
     mounted() {
         //监听list列表的拖拽

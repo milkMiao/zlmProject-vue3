@@ -1,3 +1,4 @@
+// 卡片和附件的--中间表--关联关系
 import {
     AutoIncrement, BelongsTo,
     Column,
@@ -51,7 +52,7 @@ export class CardAttachment extends Model<CardAttachment> {
     })
     isCover: boolean;
 
-    @BelongsTo(() => Attachment)
+    @BelongsTo(() => Attachment) //附件信息详情--{}
     detail: Attachment;
 
     @CreatedAt

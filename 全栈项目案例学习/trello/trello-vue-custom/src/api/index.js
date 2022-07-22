@@ -96,3 +96,13 @@ export const putList = data => {
         }
     })
 };
+
+//4、获取一个指定列表下的所有--卡片集合 Card
+export const getCards = boardListId =>{
+    return axios({
+        url: '/card/',
+        params:{
+            boardListId
+        }
+    })
+}

@@ -1,3 +1,4 @@
+//面板信息表
 import {
     AutoIncrement,
     Column,

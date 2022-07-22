@@ -1,3 +1,4 @@
+// comment 卡片内的--评论功能表
 import {
     AutoIncrement, BelongsTo,
     Column,

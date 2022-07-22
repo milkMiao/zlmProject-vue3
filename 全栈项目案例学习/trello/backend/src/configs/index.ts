@@ -1,4 +1,4 @@
-import databaseConfig from './database.json'
+import databaseConfig from './database.json';
 import path from 'path';
 
 interface IDatabaseConfig {
@@ -7,6 +7,7 @@ interface IDatabaseConfig {
     database: string;
     host: string;
     dialect: 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'mariadb';
+    timezone: string;
 }
 
 const configs = {
@@ -18,6 +19,11 @@ const configs = {
         database: databaseConfig.development as IDatabaseConfig,
         jwt: {
             privateKey: 'kaikeba'
+        },
+        storage: {
+            dir: path.resolve(__dirname, '../attachments'),//卡片--附件访问路径
+            prefix: '/public/attachments' //卡片--附件访问前缀
+            // 路径：/public/attachments/附件.png -----返回给前端
         }
     },
     test: {
@@ -28,6 +34,10 @@ const configs = {
         database: databaseConfig.test as IDatabaseConfig,
         jwt: {
             privateKey: 'kaikeba'
+        },
+        storage: {
+            dir: path.resolve(__dirname, 'attachments'),
+            prefix: '/public/attachments'
         }
     },
     production: {
@@ -38,6 +48,10 @@ const configs = {
         database: databaseConfig.production as IDatabaseConfig,
         jwt: {
             privateKey: 'kaikeba'
+        },
+        storage: {
+            dir: path.resolve(__dirname, 'attachments'),
+            prefix: '/public/attachments'
         }
     }
 };

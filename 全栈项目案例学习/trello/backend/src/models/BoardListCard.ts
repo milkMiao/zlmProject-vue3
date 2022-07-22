@@ -1,9 +1,11 @@
+//面板列表--指定列表内的--卡片信息表
 import {
     AutoIncrement,
     Column,
     CreatedAt,
     DataType,
-    ForeignKey, HasMany,
+    ForeignKey, 
+    HasMany,
     Model,
     PrimaryKey,
     Table,
@@ -58,7 +60,7 @@ export class BoardListCard extends Model<BoardListCard> {
     })
     order: number;
 
-    @HasMany(() => CardAttachment)
+    @HasMany(() => CardAttachment) //卡片附件
     attachments: CardAttachment[];
 
     @HasMany(() => Comment)
