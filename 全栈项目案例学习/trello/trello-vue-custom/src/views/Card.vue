@@ -1,6 +1,7 @@
 <template>
  <!-- 弹框遮罩 -->
-    <div class="window-overlay" style="display: block" v-if="card && list">
+    <div class="window-overlay" style="display: block">
+     <!-- v-if="card && list" -->
         <!--弹出式窗口-->
         <div class="popup">
 

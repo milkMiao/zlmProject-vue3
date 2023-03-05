@@ -45,30 +45,32 @@
                         </div>
                     </div>
 
-                    <div class="list-cards">
+                    <!-- <router-link :to="{name: 'Card', params:{listId:1, cardId:2}}"> -->
+                        <div class="list-cards">
 
-                        <div class="list-card">
-                            <div class="list-card-title">接口代码编写及测试</div>
-                            <div class="list-card-badges">
-                                <div class="badge">
-                                    <span class="icon icon-description"></span>
-                                </div>
-                                <div class="badge">
-                                    <span class="icon icon-comment"></span>
-                                    <span class="text">2</span>
-                                </div>
-                                <div class="badge">
-                                    <span class="icon icon-attachment"></span>
-                                    <span class="text">5</span>
+                            <div class="list-card">
+                                <div class="list-card-title">接口代码编写及测试</div>
+                                <div class="list-card-badges">
+                                    <div class="badge">
+                                        <span class="icon icon-description"></span>
+                                    </div>
+                                    <div class="badge">
+                                        <span class="icon icon-comment"></span>
+                                        <span class="text">2</span>
+                                    </div>
+                                    <div class="badge">
+                                        <span class="icon icon-attachment"></span>
+                                        <span class="text">5</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="list-card-add-form">
-                            <textarea class="form-field-input" placeholder="为这张卡片添加标题……"></textarea>
-                        </div>
+                            <div class="list-card-add-form">
+                                <textarea class="form-field-input" placeholder="为这张卡片添加标题……"></textarea>
+                            </div>
 
-                    </div>
+                        </div>
+                    <!-- </router-link> -->
 
                     <div class="list-footer">
                         <div class="list-card-add">
